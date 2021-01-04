@@ -1,6 +1,6 @@
 import cv2
 import sys
-import csv
+import pandas as pd
 
 # Algorithm to detect faces
 def detect_face(imgrgb, filename):
@@ -55,22 +55,20 @@ def detect_temperature(img, filename, csvname):
     thickness = 2
 
     # open CSV
-    temp = []
+    df=pd.read_csv(csvname, sep=';')
 
-    with open(csvname, 'r') as file:
-        reader = csv.reader(file)
-        for row in reader:
-            print(row)
-            temp.append(row)
+    # Get Max Value
+    column_maxes_series = df.max()
+    maxtmp = column_maxes_series.max()
 
-    if (max(temp) > 37.5):
-        img = cv2.putText(img, 'Febre: Sim', pos2, font,
-                       fontScale, color, thickness, cv2.LINE_AA)
+    finaltmp = float(maxtmp)
+
+    if (finaltmp > 37.5):
+        img = cv2.putText(img, 'Febre: Sim', pos2, font, fontScale, color, thickness, cv2.LINE_AA)
     else:
-        img = cv2.putText(img, 'Febre: Nao', pos2, font,
-                       fontScale, color, thickness, cv2.LINE_AA)
+        img = cv2.putText(img, 'Febre: Nao', pos2, font, fontScale, color, thickness, cv2.LINE_AA)
 
-    img = cv2.putText(img, 'Temperatura: ' + max(temp), pos, font,
+    img = cv2.putText(img, 'Temperatura: ' + str(finaltmp), pos, font,
                    fontScale, color, thickness, cv2.LINE_AA)
 
 
@@ -94,9 +92,6 @@ for arg in sys.argv:
 # Load the cascade
 face_cascade = cv2.CascadeClassifier('face_cascade.xml')
 eye_cascade = cv2.CascadeClassifier('eye_cascade.xml')
-
-print(imglist)
-print(imglistrgb)
 
 # Load images to detect
 for image in imglist:
