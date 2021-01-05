@@ -1,5 +1,5 @@
 # thermal-fever
-Trabalho de Processamento de IMagens de reconhecimento de febre através de câmeras térmicas
+Trabalho de Processamento de Imagens para o reconhecimento facial e de febre através de câmeras térmicas
 
 ## Instruções para o Linux:
 
