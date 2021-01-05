@@ -52,7 +52,7 @@ def detect_temperature(img, filename, csvname):
     color = (255, 0, 0)
 
     # Line thickness of 2 px
-    thickness = 2
+    thickness = 1
 
     # open CSV
     df=pd.read_csv(csvname, sep=';')
